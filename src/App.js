@@ -1,25 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { Route, Routes, Link } from 'react-router-dom';
+import CharChat from './CharChat';
+import CharTemplate from './CharTemplate';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render () {
+    return (
+      <div className="App">
+        <div>
+          <nav>
+            <ul id="navigation">
+              <li>
+                <Link to="/">Character Template</Link>
+              </li>
+              <li>
+                <Link to="/chat">Character Chat</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <Routes>
+          <Route path="/" element={<CharTemplate />} />
+          <Route path="/chat" element={<CharChat />} />
+        </Routes>
+      </div>
+    );
+  }
 }
 
 export default App;
