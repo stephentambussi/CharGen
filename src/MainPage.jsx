@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import logo from './logo.svg';
 
-class CharTemplate extends React.Component {
+class MainPage extends React.Component {
     render()
     {
         return (
@@ -26,4 +26,4 @@ class CharTemplate extends React.Component {
     }
 }
 
-export default CharTemplate;
+export default MainPage;
