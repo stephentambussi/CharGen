@@ -15,13 +15,39 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(1px + 2vmin);
   color: white;
+}
+
+.title_btns {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+}
+.title_btn {
+  padding: 10px;
+}
+
+.Template {
+  background-color: #c5c7c6;
+  border: 3px solid black;
+}
+
+.TemplateTitle {
+  font-size: calc(5px + 2vmin);
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
+.WorldInfoTitle {
+  font-size: calc(1px + 2vmin);
 }
 
 .App-link {
