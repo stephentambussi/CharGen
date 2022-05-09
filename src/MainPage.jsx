@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import logo from './logo.svg';
-
+//Leaving this for now even though it is unused
 class MainPage extends React.Component {
     render()
     {
