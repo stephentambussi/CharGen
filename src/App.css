@@ -30,8 +30,15 @@
   align-items: center;
   justify-content: center;
 }
+
 .title_btn {
   padding: 10px;
+}
+
+.header-btn {
+  font-size: 16px;
+  height: 40px;
+  width: 115px;
 }
 
 .Template {
@@ -50,8 +57,18 @@
   font-size: calc(1px + 2vmin);
 }
 
-.App-link {
-  color: #61dafb;
+.BasicTraits {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
+.BasicTraitsTitle {
+  font-size: calc(1px + 2vmin);
+}
+
+.BasicTraitsGen {
+  margin-left: 10px;
 }
 
 @keyframes App-logo-spin {

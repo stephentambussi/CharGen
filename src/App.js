@@ -12,8 +12,8 @@ class App extends React.Component {
         <header className="App-header">
           <h1 className="Title">Character Generator Title</h1>
           <ul className="title_btns">
-            <li className="title_btn"><button type="download_btn">Download</button></li>
-            <li className="title_btn"><a href="https://github.com/stephentambussi/char-gen"><button type="gh_btn">Github</button></a></li>
+            <li className="title_btn"><button class="header-btn" type="button">Download</button></li>
+            <li className="title_btn"><a href="https://github.com/stephentambussi/char-gen"><button class="header-btn" type="button">Github</button></a></li>
           </ul>
         </header>
 
@@ -26,6 +26,17 @@ class App extends React.Component {
             <br />
               <textarea name="world_info_textbox" rows="6" cols="150" placeholder="Enter details here about the virtual game world that you want a character generated for 
                 (one or more sentences)"> 
+              </textarea>
+            </p>
+          </div>
+
+          <div className="BasicTraits">
+            <p>
+              <label htmlFor="basic_traits_textbox" name="BasicTraitsTitle">Basic Traits</label>
+              <button class="BasicTraitsGen" type="button">Generate</button>
+            <br />
+              <textarea name="basic_traits_textbox" rows="6" cols="100" placeholder="This will be populated with the character's basic traits: name, age, gender, appearance,
+                race/species, etc. However, you can choose to create these traits yourself."> 
               </textarea>
             </p>
           </div>
