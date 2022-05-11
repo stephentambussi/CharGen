@@ -5,6 +5,34 @@ import React from 'react';
 //import MainPage from './MainPage';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    /*
+    this.worldInfo_state = {
+      value: ''
+    };
+    */
+   //TODO: figure out how to name this differently
+    this.state = {
+      value: ''
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleChange(event) {
+    //console.log(event.target.value);
+    this.setState({value: event.target.value});
+    console.log(this.state.value);
+  }
+
+  handleClick(event) {
+    alert('Test BasicTraits textbox submission: ' + this.state.value);
+    event.preventDefault();
+    //TODO: implement code here so that OpenAI API is called and appends to current text in textarea
+  }
+
   render () {
     return (
       <div className="App">
@@ -33,9 +61,10 @@ class App extends React.Component {
           <div className="BasicTraits">
             <p>
               <label htmlFor="basic_traits_textbox" name="BasicTraitsTitle">Basic Traits</label>
-              <button class="BasicTraitsGen" type="button">Generate</button>
+              <button className="BasicTraitsGen" type="button" onClick={this.handleClick}>Generate</button>
             <br />
-              <textarea name="basic_traits_textbox" rows="6" cols="100" placeholder="This will be populated with the character's basic traits: name, age, gender, appearance,
+              <textarea name="basic_traits_textbox" rows="6" cols="100" value={this.state.value} onChange={this.handleChange}
+                placeholder="This will be populated with the character's basic traits: name, age, gender, appearance,
                 race/species, etc. However, you can choose to create these traits yourself."> 
               </textarea>
             </p>
