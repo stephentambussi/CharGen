@@ -12,13 +12,31 @@ class App extends React.Component {
       value: ''
     };
     */
-   //TODO: figure out how to name this differently
+    //TODO: figure out how to name this differently
     this.state = {
       value: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  async getGPTResponse() {
+    //TODO: implement code here so that OpenAI API is called and appends to current text in textarea
+    //TODO: figure out why env variable does not work
+    const { Configuration, OpenAIApi } = require("openai");
+    const configuration = new Configuration({
+      //apiKey: process.env.OPENAI_API_KEY,
+      apiKey: 'Put back API key here',
+    });
+    const openai = new OpenAIApi(configuration);
+    const response = await openai.createCompletion("text-davinci-002", {
+      prompt: this.state.value,
+      temperature: 0,
+      max_tokens: 256,
+    });
+    //console.log(response.data.choices[0].text);
+    this.setState({value: this.state.value + response.data.choices[0].text})
   }
 
   handleChange(event) {
@@ -28,9 +46,10 @@ class App extends React.Component {
   }
 
   handleClick(event) {
-    alert('Test BasicTraits textbox submission: ' + this.state.value);
+    //TODO: change alert to be less intrusive
+    //alert('Test BasicTraits textbox submission: ' + this.state.value);
     event.preventDefault();
-    //TODO: implement code here so that OpenAI API is called and appends to current text in textarea
+    this.getGPTResponse();
   }
 
   render () {
