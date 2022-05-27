@@ -8072,6 +8072,11 @@
   "resolved" "https://registry.npmjs.org/stackframe/-/stackframe-1.2.1.tgz"
   "version" "1.2.1"
 
+"status-indicator@^1.0.9":
+  "integrity" "sha512-xaUIXfWA++prLDv49U2xrcIJAMKb0djfpjDc4aApW+bDIx9HzI26CHWKEoAp/DuvUlyPwBj4Q5VURntV9qa71A=="
+  "resolved" "https://registry.npmjs.org/status-indicator/-/status-indicator-1.0.9.tgz"
+  "version" "1.0.9"
+
 "statuses@>= 1.4.0 < 2":
   "integrity" "sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow="
   "resolved" "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
