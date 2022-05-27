@@ -57,10 +57,15 @@
   font-size: calc(1px + 2vmin);
 }
 
-.BasicTraits {
+.BasicTraitsAndSkills {
   display: flex;
-  align-items: left;
-  justify-content: left;
+  align-items: center;
+  justify-content: center;
+}
+
+.BasicTraits {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .BasicTraitsTitle {
@@ -69,6 +74,65 @@
 
 .BasicTraitsGen {
   margin-left: 10px;
+  margin-bottom: 2px;
+  height: 30px;
+  width: 75px;
+}
+
+.Skills {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.SkillsTitle {
+  font-size: calc(1px + 2vmin);
+}
+
+.SkillsGen {
+  margin-left: 10px;
+  margin-bottom: 2px;
+  height: 30px;
+  width: 75px;
+}
+
+.Personality {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.PersonalityHeading {
+  margin-right: 10px;
+}
+
+.PersonalityTitle {
+  font-size: calc(1px + 2vmin);
+}
+
+.PersonalityGen {
+  margin-top: 10px;
+  height: 40px;
+  width: 115px;
+}
+
+.LifeInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.LifeInfoHeading {
+  margin-right: 10px;
+}
+
+.LifeInfoTitle {
+  font-size: calc(1px + 2vmin);
+}
+
+.LifeInfoGen {
+  margin-top: 10px;
+  height: 40px;
+  width: 115px;
 }
 
 @keyframes App-logo-spin {
