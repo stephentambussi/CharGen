@@ -10,9 +10,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       worldinfo: '',
+      traitstatus: false, //false for statuses means prior text area needs to be filled in before continuing
       basictraits: '',
+      skillstatus: false,
       skills: '',
+      personalitystatus: false,
       personality: '',
+      lifeinfostatus: false,
       lifeinfo: ''
     };
 
@@ -32,7 +36,7 @@ class App extends React.Component {
     const { Configuration, OpenAIApi } = require("openai");
     const configuration = new Configuration({
       //apiKey: process.env.OPENAI_API_KEY,
-      apiKey: 'API key goes here',
+      apiKey: 'API Key here',
     });
     const openai = new OpenAIApi(configuration);
     if(this.state.worldinfo === '') {
@@ -40,6 +44,7 @@ class App extends React.Component {
       return;
     }
 
+    //Basic Traits Section
     if(button_num === 0 && this.state.basictraits === '') { //If basic traits is empty when clicking generate
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + 'Generate the name, age, gender, and physical appearance of a character in this world:',
@@ -51,13 +56,14 @@ class App extends React.Component {
 
     else if(button_num === 0) { //If basic traits has some info in it already
       const response = await openai.createCompletion("text-davinci-002", {
-        prompt: this.state.worldinfo + this.state.basictraits + 'Generate the name, age, gender, and physical appearance of a character in this world if they do not already exist:',
+        prompt: this.state.worldinfo + this.state.basictraits + 'Generate the name, age, gender, and physical appearance of a character in this world if these do not already exist:',
         temperature: 0,
         max_tokens: 256,
       });
       this.setState({basictraits: this.state.basictraits + response.data.choices[0].text})
     }
 
+    //Skills Section
     if(button_num === 1 && this.state.basictraits === '') { //basic traits cannot be empty when working on Skills
       alert('ERROR: basic traits must be filled in before skills');
       return;
@@ -74,64 +80,134 @@ class App extends React.Component {
 
     else if(button_num === 1) { //If skills has some info in it already
       const response = await openai.createCompletion("text-davinci-002", {
-        prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + 'Generate the physical and intellectual skills of this character if they do not already exist:',
+        prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + 'Generate the physical and intellectual skills of this character if these do not already exist:',
         temperature: 0,
         max_tokens: 256,
       });
       this.setState({skills: this.state.skills + response.data.choices[0].text})
     }
 
-    //TODO: implement the generation functionality for personality and life info sections
+    //Personality Section
+    if(button_num === 2 && this.state.skills === '') { //skills cannot be empty when working on personality
+      alert('ERROR: skills must be filled in before personality');
+      return;
+    }
+
+    else if(button_num === 2 && this.state.personality === '') { //If personality is empty when clicking generate
+      const response = await openai.createCompletion("text-davinci-002", {
+        prompt: this.state.worldinfo + this.state.basictraits + this.state.skills 
+          + 'Generate the personality of this character such as their interests, behavioral quirks, and standard personality traits:',
+        temperature: 0,
+        max_tokens: 256,
+      });
+      this.setState({personality: this.state.personality + response.data.choices[0].text})
+    }
+
+    else if(button_num === 2) { //If personality has some info in it already
+      const response = await openai.createCompletion("text-davinci-002", {
+        prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality 
+          + 'Generate the personality of this character such as their interests, behavioral quirks, and standard personality traits if these do not already exist:',
+        temperature: 0,
+        max_tokens: 256,
+      });
+      this.setState({personality: this.state.personality + response.data.choices[0].text})
+    }
+
+    //Life Info Section
+    if(button_num === 3 && this.state.personality === '') { //personality cannot be empty when working on life info
+      alert('ERROR: personality must be filled in before life info');
+      return;
+    }
+
+    else if(button_num === 3 && this.state.lifeinfo === '') { //If life info is empty when clicking generate
+      const response = await openai.createCompletion("text-davinci-002", {
+        prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality
+          + 'Generate the life history of this character such as their major life events, occupation, family, and relationships:',
+        temperature: 0,
+        max_tokens: 256,
+      });
+      this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text})
+    }
+
+    else if(button_num === 3) { //If life info has some info in it already
+      const response = await openai.createCompletion("text-davinci-002", {
+        prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality + this.state.lifeinfo
+          + 'Generate the life history of this character such as their major life events, occupation, family, and relationships if these do not already exist:',
+        temperature: 0,
+        max_tokens: 512, //Increase amount to have longer story
+      });
+      this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text})
+    }
   }
 
   handleWorldChange(event) {
-    //TODO: figure out why this does not work and implement
-    var trait_status = document.getElementById("trait_status");
-    if(this.state.worldinfo !== '') {
-      trait_status.setAttribute("negative", "false");
-      trait_status.setAttribute("positive", "true");
+    if(event.target.value !== '') { //if textarea has text in it, change status
+      this.setState({traitstatus: true})
+    }
+    else if(event.target.value === '') {
+      this.setState({traitstatus: false})
     }
     this.setState({worldinfo: event.target.value});
-    console.log(this.state.worldinfo);
+    //console.log(event.target.value);
   }
 
   handleTraitChange(event) {
-    //console.log(event.target.value);
+    if(event.target.value !== '') { //if textarea has text in it, change status
+      this.setState({skillstatus: true})
+    }
+    else if(event.target.value === '') {
+      this.setState({skillstatus: false})
+    }
     this.setState({basictraits: event.target.value});
-    console.log(this.state.basictraits);
+    //console.log(event.target.value);
   }
 
   handleTraitClick(event) {
     //TODO: add processing notification/status
     event.preventDefault();
     this.getGPTResponse(0);
+    this.setState({skillstatus: true})
   }
 
   handleSkillChange(event) {
+    if(event.target.value !== '') { //if textarea has text in it, change status
+      this.setState({personalitystatus: true})
+    }
+    else if(event.target.value === '') {
+      this.setState({personalitystatus: false})
+    }
     this.setState({skills: event.target.value});
-    console.log(this.state.skills);
+    //console.log(event.target.value);
   }
 
   handleSkillClick(event) {
     //TODO: add processing notification/status
     event.preventDefault();
     this.getGPTResponse(1);
+    this.setState({personalitystatus: true})
   }
 
   handlePersonalityChange(event) {
+    if(event.target.value !== '') { //if textarea has text in it, change status
+      this.setState({lifeinfostatus: true})
+    }
+    else if(event.target.value === '') {
+      this.setState({lifeinfostatus: false})
+    }
     this.setState({personality: event.target.value});
-    console.log(this.state.personality);
+    //console.log(event.target.value);
   }
 
   handlePersonalityClick(event) {
     //TODO: add processing notification/status
     event.preventDefault();
     this.getGPTResponse(2);
+    this.setState({lifeinfostatus: true})
   }
 
   handleLifeInfoChange(event) {
     this.setState({lifeinfo: event.target.value});
-    console.log(this.state.lifeinfo);
+    //console.log(event.target.value);
   }
 
   handleLifeInfoClick(event) {
@@ -141,6 +217,10 @@ class App extends React.Component {
   }
 
   render () {
+    const traitstatus = this.state.traitstatus;
+    const skillstatus = this.state.skillstatus;
+    const personalitystatus = this.state.personalitystatus;
+    const lifeinfostatus = this.state.lifeinfostatus;
     return (
       <div className="App">
 
@@ -165,11 +245,14 @@ class App extends React.Component {
               </textarea>
             </p>
           </div>
-
+          
           <div className="BasicTraitsAndSkills">
             <div className="BasicTraits">
               <p>
-                <status-indicator negative pulse id="trait_status"></status-indicator>
+                {traitstatus 
+                  ? <status-indicator positive></status-indicator> 
+                  : <status-indicator negative pulse></status-indicator>
+                }
                 <b className="BasicTraitsTitle"> Basic Traits </b>
                 <button className="BasicTraitsGen" type="button" onClick={this.handleTraitClick}>Generate</button>
               <br />
@@ -182,7 +265,10 @@ class App extends React.Component {
 
             <div className="Skills">
               <p>
-                <status-indicator negative pulse id="skill_status"></status-indicator>
+                {skillstatus 
+                  ? <status-indicator positive></status-indicator> 
+                  : <status-indicator negative pulse></status-indicator>
+                }
                 <b className="SkillsTitle"> Skills </b>
                 <button className="SkillsGen" type="button" onClick={this.handleSkillClick}>Generate</button>
               <br />
@@ -197,7 +283,10 @@ class App extends React.Component {
 
           <div className="Personality">
               <div className="PersonalityHeading">
-                <status-indicator negative pulse id="personality_status"></status-indicator>
+                {personalitystatus 
+                  ? <status-indicator positive></status-indicator> 
+                  : <status-indicator negative pulse></status-indicator>
+                }
                 <b className="PersonalityTitle"> Personality </b>
                 <br />
                 <button className="PersonalityGen" type="button" onClick={this.handlePersonalityClick}>Generate</button>
@@ -216,7 +305,10 @@ class App extends React.Component {
 
           <div className="LifeInfo">
               <div className="LifeInfoHeading">
-                <status-indicator negative pulse id="life_info_status"></status-indicator>
+                {lifeinfostatus 
+                  ? <status-indicator positive></status-indicator> 
+                  : <status-indicator negative pulse></status-indicator>
+                }
                 <b className="LifeInfoTitle"> Life Info </b>
                 <br />
                 <button className="LifeInfoGen" type="button" onClick={this.handleLifeInfoClick}>Generate</button>
