@@ -49,8 +49,8 @@
 .TemplateTitle {
   font-size: calc(5px + 2vmin);
   display: flex;
-  align-items: left;
-  justify-content: left;
+  align-items: center;
+  justify-content: center;
 }
 
 .WorldInfoTitle {
@@ -135,11 +135,26 @@
   width: 115px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Chat {
+  border: 3px solid black;
+}
+
+.ChatTitle {
+  font-size: calc(5px + 2vmin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SendMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SendMsgBtn {
+  height: 40px;
+  width: 115px;
+  font-weight: bolder;
+  margin-right: 10px;
 }

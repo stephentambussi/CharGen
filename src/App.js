@@ -1,9 +1,8 @@
+//COEN296 - Human Machine Creativity Course Project -- Stephen Tambussi
 import './App.css';
 import React from 'react';
-import 'status-indicator/styles.css'
-//import logo from './logo.svg';
-//import { Route, Routes, Link } from 'react-router-dom';
-//import MainPage from './MainPage';
+import 'status-indicator/styles.css';
+import { ChatFeed, Message } from 'react-chat-ui';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,7 +16,11 @@ class App extends React.Component {
       personalitystatus: false,
       personality: '',
       lifeinfostatus: false,
-      lifeinfo: ''
+      lifeinfo: '',
+      send_msgstatus: false,
+      send_msg: '',
+      messages: [],
+      is_typing: false,
     };
 
     this.handleWorldChange = this.handleWorldChange.bind(this);
@@ -29,6 +32,8 @@ class App extends React.Component {
     this.handlePersonalityClick = this.handlePersonalityClick.bind(this);
     this.handleLifeInfoChange = this.handleLifeInfoChange.bind(this);
     this.handleLifeInfoClick = this.handleLifeInfoClick.bind(this);
+    this.handleSendMsgChange = this.handleSendMsgChange.bind(this);
+    this.handleSendMsgClick = this.handleSendMsgClick.bind(this);
   }
 
   //TODO: figure out a way to prevent user from generating another character in same textbox when a character already exists
@@ -48,7 +53,7 @@ class App extends React.Component {
     if(button_num === 0 && this.state.basictraits === '') { //If basic traits is empty when clicking generate
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + 'Generate the name, age, gender, and physical appearance of a character in this world:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({basictraits: this.state.basictraits + response.data.choices[0].text})
@@ -57,7 +62,7 @@ class App extends React.Component {
     else if(button_num === 0) { //If basic traits has some info in it already
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + 'Generate the name, age, gender, and physical appearance of a character in this world if these do not already exist:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({basictraits: this.state.basictraits + response.data.choices[0].text})
@@ -72,7 +77,7 @@ class App extends React.Component {
     else if(button_num === 1 && this.state.skills === '') { //If skills are empty when clicking generate
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + 'Generate the physical and intellectual skills of this character:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({skills: this.state.skills + response.data.choices[0].text})
@@ -81,7 +86,7 @@ class App extends React.Component {
     else if(button_num === 1) { //If skills has some info in it already
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + 'Generate the physical and intellectual skills of this character if these do not already exist:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({skills: this.state.skills + response.data.choices[0].text})
@@ -97,7 +102,7 @@ class App extends React.Component {
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills 
           + 'Generate the personality of this character such as their interests, behavioral quirks, and standard personality traits:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({personality: this.state.personality + response.data.choices[0].text})
@@ -107,7 +112,7 @@ class App extends React.Component {
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality 
           + 'Generate the personality of this character such as their interests, behavioral quirks, and standard personality traits if these do not already exist:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({personality: this.state.personality + response.data.choices[0].text})
@@ -123,7 +128,7 @@ class App extends React.Component {
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality
           + 'Generate the life history of this character such as their major life events, occupation, family, and relationships:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text})
@@ -133,10 +138,45 @@ class App extends React.Component {
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality + this.state.lifeinfo
           + 'Generate the life history of this character such as their major life events, occupation, family, and relationships if these do not already exist:',
-        temperature: 0,
+        temperature: 0.5,
         max_tokens: 512, //Increase amount to have longer story
       });
       this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text})
+    }
+
+    //Chat Section
+    if(button_num === 4 && this.state.lifeinfo === '') { //Life info should not be empty when trying to chat with generated character
+      alert('ERROR: life info must be filled in before attempting to chat with the character');
+      return;
+    }
+
+    else if(button_num === 4) {
+      this.setState({is_typing: true});
+      var prompt = '';
+      for (var i = 0; i < this.state.messages.length; i++) { //iterate over messages array
+        var curr_msg = this.state.messages[i];
+        if(curr_msg.id === 0) {
+          prompt = prompt + "Me: " + curr_msg.message;
+        }
+        else if(curr_msg.id === 1) {
+          prompt = prompt + curr_msg.message;
+        }
+        prompt = prompt + "\n";
+      }
+      const response = await openai.createCompletion("text-davinci-002", {
+        prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality + this.state.lifeinfo + prompt,
+        temperature: 0.5,
+        max_tokens: 256,
+        stop: "Me:"
+      });
+      const prevState = this.state;
+      const newMessage = new Message({
+        id: 1, //you are id 0 and GPT-3 is 1
+        message: response.data.choices[0].text,
+        senderName: "Your character",
+      });
+      prevState.messages.push(newMessage);
+      this.setState({is_typing: false});
     }
   }
 
@@ -206,6 +246,12 @@ class App extends React.Component {
   }
 
   handleLifeInfoChange(event) {
+    if(event.target.value !== '') {
+      this.setState({send_msgstatus: true})
+    }
+    else if(event.target.value === '') {
+      this.setState({send_msgstatus: false})
+    }
     this.setState({lifeinfo: event.target.value});
     //console.log(event.target.value);
   }
@@ -214,6 +260,25 @@ class App extends React.Component {
     //TODO: add processing notification/status
     event.preventDefault();
     this.getGPTResponse(3);
+    this.setState({send_msgstatus: true});
+  }
+
+  handleSendMsgChange(event) {
+    this.setState({send_msg: event.target.value});
+    //console.log(this.state.send_msg);
+  }
+
+  handleSendMsgClick(event) {
+    const prevState = this.state;
+    const newMessage = new Message({
+      id: 0, //you are id 0 and GPT-3 is 1
+      message: this.state.send_msg,
+      senderName: "you",
+    });
+    prevState.messages.push(newMessage);
+    this.getGPTResponse(4);
+    this.setState({send_msg: ''}); //make send_msg empty
+    console.log(this.state.messages);
   }
 
   render () {
@@ -221,6 +286,7 @@ class App extends React.Component {
     const skillstatus = this.state.skillstatus;
     const personalitystatus = this.state.personalitystatus;
     const lifeinfostatus = this.state.lifeinfostatus;
+    const send_msgstatus = this.state.send_msgstatus;
     return (
       <div className="App">
 
@@ -328,11 +394,23 @@ class App extends React.Component {
         </div>
 
         <div className="Chat">
-          <p>
-            Test text for chat
-          </p>
+          <h2 className="ChatTitle">Character Chat</h2>
+          <ChatFeed
+            messages={this.state.messages} // Array: list of message objects
+            isTyping={this.state.is_typing} // Boolean: is the recipient typing
+            hasInputField={false} // Boolean: use our input, or use your own
+          />
+          <div className="SendMsg">
+            <textarea name="send_msg_textbox" rows="2" cols="200" value={this.state.send_msg} onChange={this.handleSendMsgChange}
+              placeholder="Enter here to send a message to the character you created."> 
+            </textarea>
+            <button className="SendMsgBtn" type="button" onClick={this.handleSendMsgClick}>SEND</button>
+            {send_msgstatus 
+              ? <status-indicator positive></status-indicator> 
+              : <status-indicator negative pulse></status-indicator>
+            }
+          </div>
         </div>
-
       </div>
     );
   }
