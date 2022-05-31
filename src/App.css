@@ -80,7 +80,7 @@
 }
 
 .BasicTraitsGen {
-  margin-left: 10px;
+  margin-left: 5px;
   margin-bottom: 2px;
   margin-right: 5px;
   height: 30px;
@@ -105,7 +105,7 @@
 }
 
 .SkillsGen {
-  margin-left: 10px;
+  margin-left: 5px;
   margin-bottom: 2px;
   margin-right: 5px;
   height: 30px;
@@ -136,12 +136,14 @@
 
 .PersonalityGen {
   margin-top: 5px;
+  margin-left: 5px;
   height: 35px;
   width: 110px;
 }
 
 .PersonalityReGen {
   margin-top: 5px;
+  margin-left: 5px;
   height: 35px;
   width: 110px;
 }
@@ -168,12 +170,14 @@
 
 .LifeInfoGen {
   margin-top: 5px;
+  margin-left: 5px;
   height: 35px;
   width: 110px;
 }
 
 .LifeInfoReGen {
   margin-top: 5px;
+  margin-left: 5px;
   height: 35px;
   width: 110px;
 }

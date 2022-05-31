@@ -51,7 +51,8 @@ class App extends React.Component {
   async getGPTResponse(button_num) {
     const { Configuration, OpenAIApi } = require("openai");
     const configuration = new Configuration({
-      apiKey: 'API key here',
+      //Insert your OpenAI API Key here to try this out
+      apiKey: 'API Key',
     });
     const openai = new OpenAIApi(configuration);
     if(this.state.worldinfo === '') {
@@ -61,21 +62,47 @@ class App extends React.Component {
 
     //Basic Traits Section
     if(button_num === 0 && this.state.basictraits === '') { //If basic traits is empty when clicking generate
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 1500,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + 'Generate the name, age, gender, and physical appearance of a character in this world:',
         temperature: 0.7,
         max_tokens: 256,
       });
       this.setState({basictraits: this.state.basictraits + response.data.choices[0].text})
+      this.setState({skillstatus: true});
     }
 
     else if(button_num === 0) { //If basic traits has some info in it already
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 1500,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + 'Generate the name, age, gender, and physical appearance of a character in this world if these do not already exist:',
         temperature: 0.65,
         max_tokens: 256,
       });
       this.setState({basictraits: this.state.basictraits + response.data.choices[0].text})
+      this.setState({skillstatus: true});
     }
 
     //Skills Section
@@ -85,21 +112,47 @@ class App extends React.Component {
     }
 
     else if(button_num === 1 && this.state.skills === '') { //If skills are empty when clicking generate
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 2000,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + 'Generate the physical and intellectual skills of this character:',
         temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({skills: this.state.skills + response.data.choices[0].text})
+      this.setState({personalitystatus: true});
     }
 
     else if(button_num === 1) { //If skills has some info in it already
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 2000,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + 'Generate the physical and intellectual skills of this character if these do not already exist:',
         temperature: 0.5,
         max_tokens: 256,
       });
       this.setState({skills: this.state.skills + response.data.choices[0].text})
+      this.setState({personalitystatus: true});
     }
 
     //Personality Section
@@ -109,6 +162,18 @@ class App extends React.Component {
     }
 
     else if(button_num === 2 && this.state.personality === '') { //If personality is empty when clicking generate
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 3000,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills 
           + 'Generate the personality of this character such as their interests, behavioral quirks, and standard personality traits:',
@@ -116,9 +181,22 @@ class App extends React.Component {
         max_tokens: 256,
       });
       this.setState({personality: this.state.personality + response.data.choices[0].text})
+      this.setState({lifeinfostatus: true});
     }
 
     else if(button_num === 2) { //If personality has some info in it already
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 3000,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality 
           + 'Generate the personality of this character such as their interests, behavioral quirks, and standard personality traits if these do not already exist:',
@@ -126,6 +204,7 @@ class App extends React.Component {
         max_tokens: 256,
       });
       this.setState({personality: this.state.personality + response.data.choices[0].text})
+      this.setState({lifeinfostatus: true});
     }
 
     //Life Info Section
@@ -135,31 +214,52 @@ class App extends React.Component {
     }
 
     else if(button_num === 3 && this.state.lifeinfo === '') { //If life info is empty when clicking generate
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 5000,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality
           + 'Generate the life history of this character such as their major life events, occupation, family, and relationships:',
         temperature: 0.7,
         max_tokens: 512,
       });
-      this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text})
+      this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text});
+      this.setState({send_msgstatus: true});
     }
 
     else if(button_num === 3) { //If life info has some info in it already
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 5000,
+        }
+      })
       const response = await openai.createCompletion("text-davinci-002", {
         prompt: this.state.worldinfo + this.state.basictraits + this.state.skills + this.state.personality + this.state.lifeinfo
           + 'Generate the life history of this character such as their major life events, occupation, family, and relationships if these do not already exist:',
         temperature: 0.7,
         max_tokens: 512, //Increase amount to have longer story
       });
-      this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text})
+      this.setState({lifeinfo: this.state.lifeinfo + response.data.choices[0].text});
+      this.setState({send_msgstatus: true});
     }
 
     //Chat Section
-    if(button_num === 4 && this.state.lifeinfo === '') { //Life info should not be empty when trying to chat with generated character
-      alert('ERROR: life info must be filled in before attempting to chat with the character');
-      return;
-    }
-
     else if(button_num === 4) {
       this.setState({is_typing: true});
       var prompt = '';
@@ -191,36 +291,84 @@ class App extends React.Component {
 
     //Reprocess for basic traits
     else if(button_num === 5 && this.state.basictraits !== '') {
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 1500,
+        }
+      })
       const response = await openai.createEdit("text-davinci-edit-001", {
         input: this.state.basictraits,
-        instruction: "Improve this by adding more detail",
+        instruction: "Improve this by adding more detail about the character's traits",
       });
       this.setState({basictraits: response.data.choices[0].text});
     }
 
     //Reprocess for skills
     else if(button_num === 6 && this.state.skills !== '') {
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 2000,
+        }
+      })
       const response = await openai.createEdit("text-davinci-edit-001", {
         input: this.state.skills,
-        instruction: "Improve this by adding more detail",
+        instruction: "Improve this by adding more detail about the character's skills",
       });
       this.setState({skills: response.data.choices[0].text})
     }
 
     //Reprocess for personality
     else if(button_num === 7 && this.state.personality !== '') {
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 3000,
+        }
+      })
       const response = await openai.createEdit("text-davinci-edit-001", {
         input: this.state.personality,
-        instruction: "Improve this by adding more detail",
+        instruction: "Improve this by adding more detail about the character's personality",
       });
       this.setState({personality: response.data.choices[0].text})
     }
 
     //Reprocess for life info
     else if(button_num === 8 && this.state.lifeinfo !== '') {
+      Store.addNotification({
+        title: "AI is Generating",
+        message: "Please Wait...",
+        type: "info",
+        container: "top-left",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        width: 150,
+        dismiss: {
+          duration: 5000,
+        }
+      })
       const response = await openai.createEdit("text-davinci-edit-001", {
         input: this.state.lifeinfo,
-        instruction: "Improve this by adding more detail",
+        instruction: "Improve this by adding more detail about the character's life",
       });
       this.setState({lifeinfo: response.data.choices[0].text})
     }
@@ -253,36 +401,11 @@ class App extends React.Component {
   handleTraitClick(event) {
     event.preventDefault();
     this.getGPTResponse(0);
-    this.setState({skillstatus: true});
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 1500,
-      }
-    })
   }
 
   handleTraitReClick(event) {
     event.preventDefault();
     this.getGPTResponse(5);
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 1500,
-      }
-    })
   }
 
   handleSkillChange(event) {
@@ -300,36 +423,11 @@ class App extends React.Component {
   handleSkillClick(event) {
     event.preventDefault();
     this.getGPTResponse(1);
-    this.setState({personalitystatus: true});
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 2000,
-      }
-    })
   }
 
   handleSkillReClick(event) {
     event.preventDefault();
     this.getGPTResponse(6);
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 2000,
-      }
-    })
   }
 
   handlePersonalityChange(event) {
@@ -347,36 +445,11 @@ class App extends React.Component {
   handlePersonalityClick(event) {
     event.preventDefault();
     this.getGPTResponse(2);
-    this.setState({lifeinfostatus: true});
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 3000,
-      }
-    })
   }
 
   handlePersonalityReClick(event) {
     event.preventDefault();
     this.getGPTResponse(7);
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 3000,
-      }
-    })
   }
 
   handleLifeInfoChange(event) {
@@ -394,36 +467,11 @@ class App extends React.Component {
   handleLifeInfoClick(event) {
     event.preventDefault();
     this.getGPTResponse(3);
-    this.setState({send_msgstatus: true});
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 5000,
-      }
-    })
   }
 
   handleLifeInfoReClick(event) {
     event.preventDefault();
     this.getGPTResponse(8);
-    Store.addNotification({
-      title: "AI is Processing",
-      message: "Please Wait...",
-      type: "info",
-      container: "top-left",
-      animationIn: ["animate__animated", "animate__fadeIn"],
-      animationOut: ["animate__animated", "animate__fadeOut"],
-      width: 150,
-      dismiss: {
-        duration: 5000,
-      }
-    })
   }
 
   handleSendMsgChange(event) {
@@ -432,16 +480,26 @@ class App extends React.Component {
   }
 
   handleSendMsgClick(event) {
-    const prevState = this.state;
-    const newMessage = new Message({
-      id: 0, //you are id 0 and GPT-3 is 1
-      message: this.state.send_msg,
-      senderName: "you",
-    });
-    prevState.messages.push(newMessage);
-    this.getGPTResponse(4);
-    this.setState({send_msg: ''}); //make send_msg empty
-    console.log(this.state.messages);
+    if(this.state.lifeinfo === '') { //Life info should not be empty when trying to chat with generated character
+      alert('ERROR: life info must be filled in before attempting to chat with the character');
+      return;
+    }
+    else if (this.state.send_msg === '') {
+      alert('ERROR: please enter message to send');
+      return;
+    }
+    else if(this.state.send_msg !== '' && this.state.lifeinfo !== '') {
+      const prevState = this.state;
+      const newMessage = new Message({
+        id: 0, //you are id 0 and GPT-3 is 1
+        message: this.state.send_msg,
+        senderName: "you",
+      });
+      prevState.messages.push(newMessage);
+      this.getGPTResponse(4);
+      this.setState({send_msg: ''}); //make send_msg empty
+      //console.log(this.state.messages);
+    }
   }
 
   render () {
@@ -454,7 +512,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <ReactNotifications className="Notification"/>
-          <h1 className="Title">RPG Character Generator</h1>
+          <h1 className="Title">CharGen</h1>
           <ul className="title_btns">
             <li className="title_btn"><a href="https://github.com/stephentambussi/char-gen"><button class="header-btn" type="button">Github</button></a></li>
           </ul>
@@ -478,11 +536,11 @@ class App extends React.Component {
           <div className="BasicTraitsAndSkills">
             <div className="BasicTraits">
               <p>
+                <b className="BasicTraitsTitle"> Basic Traits </b>
                 {traitstatus 
                   ? <status-indicator positive></status-indicator> 
                   : <status-indicator negative pulse></status-indicator>
                 }
-                <b className="BasicTraitsTitle"> Basic Traits </b>
                 <button className="BasicTraitsGen" type="button" onClick={this.handleTraitClick}>Generate</button>
                 <button className="BasicTraitsReGen" type="button" onClick={this.handleTraitReClick}>Reprocess</button>
                 <b>Tokens: {this.state.basictraits_cnt}</b>
@@ -496,11 +554,11 @@ class App extends React.Component {
 
             <div className="Skills">
               <p>
+                <b className="SkillsTitle"> Skills </b>
                 {skillstatus 
                   ? <status-indicator positive></status-indicator> 
                   : <status-indicator negative pulse></status-indicator>
                 }
-                <b className="SkillsTitle"> Skills </b>
                 <button className="SkillsGen" type="button" onClick={this.handleSkillClick}>Generate</button>
                 <button className="SkillsReGen" type="button" onClick={this.handleSkillReClick}>Reprocess</button>
                 <b>Tokens: {this.state.skills_cnt}</b>
@@ -516,14 +574,18 @@ class App extends React.Component {
 
           <div className="Personality">
               <div className="PersonalityHeading">
+                <b className="PersonalityTitle"> Personality </b>
+                <br />
                 {personalitystatus 
                   ? <status-indicator positive></status-indicator> 
                   : <status-indicator negative pulse></status-indicator>
                 }
-                <b className="PersonalityTitle"> Personality </b>
-                <br />
                 <button className="PersonalityGen" type="button" onClick={this.handlePersonalityClick}>Generate</button>
                 <br />
+                {personalitystatus 
+                  ? <status-indicator positive></status-indicator> 
+                  : <status-indicator negative pulse></status-indicator>
+                }
                 <button className="PersonalityReGen" type="button" onClick={this.handlePersonalityReClick}>Reprocess</button>
               </div>
 
@@ -541,14 +603,18 @@ class App extends React.Component {
 
           <div className="LifeInfo">
               <div className="LifeInfoHeading">
+                <b className="LifeInfoTitle"> Life Info </b>
+                <br />
                 {lifeinfostatus 
                   ? <status-indicator positive></status-indicator> 
                   : <status-indicator negative pulse></status-indicator>
                 }
-                <b className="LifeInfoTitle"> Life Info </b>
-                <br />
                 <button className="LifeInfoGen" type="button" onClick={this.handleLifeInfoClick}>Generate</button>
                 <br />
+                {lifeinfostatus 
+                  ? <status-indicator positive></status-indicator> 
+                  : <status-indicator negative pulse></status-indicator>
+                }
                 <button className="LifeInfoReGen" type="button" onClick={this.handleLifeInfoReClick}>Reprocess</button>
               </div>
 
