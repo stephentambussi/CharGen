@@ -51,7 +51,7 @@ class App extends React.Component {
   async getGPTResponse(button_num) {
     const { Configuration, OpenAIApi } = require("openai");
     const configuration = new Configuration({
-      apiKey: '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',
+      apiKey: 'API key here',
     });
     const openai = new OpenAIApi(configuration);
     if(this.state.worldinfo === '') {
