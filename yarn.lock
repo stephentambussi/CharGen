@@ -2408,6 +2408,11 @@
     "require-from-string" "^2.0.2"
     "uri-js" "^4.2.2"
 
+"animate.css@^4.1.1":
+  "integrity" "sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ=="
+  "resolved" "https://registry.npmjs.org/animate.css/-/animate.css-4.1.1.tgz"
+  "version" "4.1.1"
+
 "ansi-escapes@^4.2.1", "ansi-escapes@^4.3.1":
   "integrity" "sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ=="
   "resolved" "https://registry.npmjs.org/ansi-escapes/-/ansi-escapes-4.3.2.tgz"
@@ -7440,6 +7445,11 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.1.0.tgz"
   "version" "18.1.0"
 
+"react-notifications-component@^4.0.1":
+  "integrity" "sha512-NRBkWO19AsXmN0b8YQ0L12eoCAhrnmIZtGm77ATWSfQEXPL5PYSyeACpx7tePP+R2De9b0IP4yk9vY4TtzC02w=="
+  "resolved" "https://registry.npmjs.org/react-notifications-component/-/react-notifications-component-4.0.1.tgz"
+  "version" "4.0.1"
+
 "react-refresh@^0.11.0", "react-refresh@>=0.10.0 <1.0.0":
   "integrity" "sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A=="
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"
@@ -7515,7 +7525,7 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
-"react@^16.12.0 || ^17.0.0", "react@^16.8.6", "react@^18.0.0", "react@^18.1.0", "react@>= 16", "react@>=16.8", "react@>=16.x":
+"react@^16.12.0 || ^17.0.0", "react@^16.8.6", "react@^18.0.0", "react@^18.0.1", "react@^18.1.0", "react@>= 16", "react@>=16.8", "react@>=16.x":
   "integrity" "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
   "version" "18.1.0"

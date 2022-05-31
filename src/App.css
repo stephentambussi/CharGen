@@ -35,6 +35,13 @@
   padding: 10px;
 }
 
+.Notification {
+  position: fixed;
+  top: 25px;
+  left: 0;
+  z-index: 9999;
+}
+
 .header-btn {
   font-size: 16px;
   height: 40px;
@@ -47,7 +54,7 @@
 }
 
 .TemplateTitle {
-  font-size: calc(5px + 2vmin);
+  font-size: calc(6px + 2vmin);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,12 +76,21 @@
 }
 
 .BasicTraitsTitle {
-  font-size: calc(1px + 2vmin);
+  font-size: calc(2px + 2vmin);
 }
 
 .BasicTraitsGen {
   margin-left: 10px;
   margin-bottom: 2px;
+  margin-right: 5px;
+  height: 30px;
+  width: 75px;
+}
+
+.BasicTraitsReGen {
+  margin-left: 5px;
+  margin-bottom: 2px;
+  margin-right: 10px;
   height: 30px;
   width: 75px;
 }
@@ -85,12 +101,21 @@
 }
 
 .SkillsTitle {
-  font-size: calc(1px + 2vmin);
+  font-size: calc(2px + 2vmin);
 }
 
 .SkillsGen {
   margin-left: 10px;
   margin-bottom: 2px;
+  margin-right: 5px;
+  height: 30px;
+  width: 75px;
+}
+
+.SkillsReGen {
+  margin-left: 5px;
+  margin-bottom: 2px;
+  margin-right: 10px;
   height: 30px;
   width: 75px;
 }
@@ -106,13 +131,25 @@
 }
 
 .PersonalityTitle {
-  font-size: calc(1px + 2vmin);
+  font-size: calc(2px + 2vmin);
 }
 
 .PersonalityGen {
-  margin-top: 10px;
-  height: 40px;
-  width: 115px;
+  margin-top: 5px;
+  height: 35px;
+  width: 110px;
+}
+
+.PersonalityReGen {
+  margin-top: 5px;
+  height: 35px;
+  width: 110px;
+}
+
+.PersonalityTokens {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .LifeInfo {
@@ -126,13 +163,25 @@
 }
 
 .LifeInfoTitle {
-  font-size: calc(1px + 2vmin);
+  font-size: calc(2px + 2vmin);
 }
 
 .LifeInfoGen {
-  margin-top: 10px;
-  height: 40px;
-  width: 115px;
+  margin-top: 5px;
+  height: 35px;
+  width: 110px;
+}
+
+.LifeInfoReGen {
+  margin-top: 5px;
+  height: 35px;
+  width: 110px;
+}
+
+.LifeInfoTokens {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Chat {
@@ -140,7 +189,7 @@
 }
 
 .ChatTitle {
-  font-size: calc(5px + 2vmin);
+  font-size: calc(6px + 2vmin);
   display: flex;
   align-items: center;
   justify-content: center;
